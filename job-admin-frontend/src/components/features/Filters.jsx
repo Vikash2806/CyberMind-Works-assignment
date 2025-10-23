@@ -1,22 +1,11 @@
 "use client";
 
-import { Group, TextInput, Select, RangeSlider, Text, Container } from '@mantine/core';
-import { IconSearch, IconMapPin, IconBriefcase } from '@tabler/icons-react';
+import { RangeSlider, Text, Container } from '@mantine/core';
+import { IconSearch, IconMapPin, IconBriefcase, IconChevronDown } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Filters({ onFilterChange }) {
-  const [salaryRange, setSalaryRange] = useState([50000, 80000]);
-
-  /* TODO: Verify all filter component styles from Figma:
-     - Container background color
-     - Container padding
-     - Input field styles
-     - Icon sizes and colors
-     - Font family (Satoshi Variable)
-     - Spacing between filters
-     - Border radius
-     - Border colors
-  */
+  const [salaryRange, setSalaryRange] = useState([50, 80]);
 
   const handleSalaryChange = (value) => {
     setSalaryRange(value);
@@ -26,146 +15,243 @@ export default function Filters({ onFilterChange }) {
   return (
     <div
       style={{
-        /* TODO: Verify from Figma */
         backgroundColor: '#FFFFFF',
-        padding: '24px 0',
-        borderBottom: '1px solid #E5E7EB',
-        marginBottom: '32px',
+        paddingTop: '32px',
+        paddingBottom: '32px',
       }}
     >
       <Container size="xl">
-        {/* Search and Dropdown Filters Row */}
-        <Group spacing="md" mb="lg">
-          {/* Search by Job Title */}
-          <TextInput
-            placeholder="Search By Job Title, Role"
-            icon={<IconSearch size={18} color="#9CA3AF" />} /* TODO: Verify icon color from Figma */
-            onChange={(e) => onFilterChange({ jobTitle: e.target.value })}
-            style={{
-              flex: 1,
-              minWidth: '300px', /* TODO: Verify from Figma */
-            }}
-            styles={{
-              input: {
-                fontFamily: 'Satoshi Variable, -apple-system, sans-serif', /* TODO: Verify from Figma */
-                fontSize: '14px', /* TODO: Verify from Figma */
-                height: '44px', /* TODO: Verify from Figma */
-                borderRadius: '8px', /* TODO: Verify from Figma */
-                borderColor: '#E5E7EB', /* TODO: Verify from Figma */
-                '&:focus': {
-                  borderColor: '#7C3AED', /* TODO: Verify focus color from Figma */
-                },
-              },
-            }}
-          />
-
-          {/* Location Filter */}
-          <Select
-            placeholder="Preferred Location"
-            icon={<IconMapPin size={18} color="#9CA3AF" />}
-            data={[
-              { value: '', label: 'All Locations' },
-              { value: 'Chennai', label: 'Chennai' },
-              { value: 'Bangalore', label: 'Bangalore' },
-              { value: 'Mumbai', label: 'Mumbai' },
-              { value: 'Delhi', label: 'Delhi' },
-              { value: 'Hyderabad', label: 'Hyderabad' },
-              { value: 'Pune', label: 'Pune' },
-            ]}
-            onChange={(value) => onFilterChange({ location: value })}
-            style={{ width: '220px' }}
-            styles={{
-              input: {
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          gap: '24px',
+          position: 'relative',
+        }}>
+          {/* Search by Job Title - positioned at left: 65px from container */}
+          <div style={{ 
+            position: 'relative',
+            flex: '0 0 300px',
+          }}>
+            <IconSearch 
+              size={16} 
+              color="#9CA3AF" 
+              style={{ 
+                position: 'absolute',
+                left: '16px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 1,
+              }} 
+            />
+            <input
+              type="text"
+              placeholder="Search By Job Title, Role"
+              onChange={(e) => onFilterChange({ jobTitle: e.target.value })}
+              style={{
+                width: '100%',
+                height: '44px',
+                paddingLeft: '44px',
+                paddingRight: '16px',
                 fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
                 fontSize: '14px',
-                height: '44px',
+                fontWeight: 400,
+                color: '#374151',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #E5E7EB',
                 borderRadius: '8px',
-                borderColor: '#E5E7EB',
-              },
-            }}
-          />
+                outline: 'none',
+                transition: 'border-color 0.2s ease',
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#7C3AED'}
+              onBlur={(e) => e.target.style.borderColor = '#E5E7EB'}
+            />
+          </div>
 
-          {/* Job Type Filter */}
-          <Select
-            placeholder="Job type"
-            icon={<IconBriefcase size={18} color="#9CA3AF" />}
-            data={[
-              { value: '', label: 'All Types' },
-              { value: 'Full-time', label: 'Full-time' },
-              { value: 'Part-time', label: 'Part-time' },
-              { value: 'Contract', label: 'Contract' },
-              { value: 'Internship', label: 'Internship' },
-            ]}
-            onChange={(value) => onFilterChange({ jobType: value })}
-            style={{ width: '200px' }}
-            styles={{
-              input: {
+          {/* Preferred Location - positioned at left: 410px */}
+          <div style={{ 
+            position: 'relative',
+            flex: '0 0 240px',
+          }}>
+            <IconMapPin 
+              size={16} 
+              color="#9CA3AF"
+              style={{ 
+                position: 'absolute',
+                left: '16px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 1,
+              }} 
+            />
+            <select
+              onChange={(e) => onFilterChange({ location: e.target.value })}
+              style={{
+                width: '100%',
+                height: '44px',
+                paddingLeft: '44px',
+                paddingRight: '40px',
                 fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
                 fontSize: '14px',
-                height: '44px',
+                fontWeight: 400,
+                color: '#9CA3AF',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #E5E7EB',
                 borderRadius: '8px',
-                borderColor: '#E5E7EB',
-              },
-            }}
-          />
-        </Group>
+                outline: 'none',
+                appearance: 'none',
+                cursor: 'pointer',
+                transition: 'border-color 0.2s ease',
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#7C3AED'}
+              onBlur={(e) => e.target.style.borderColor = '#E5E7EB'}
+            >
+              <option value="">Preferred Location</option>
+              <option value="Chennai">Chennai</option>
+              <option value="Bangalore">Bangalore</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Pune">Pune</option>
+            </select>
+            <IconChevronDown 
+              size={16} 
+              color="#9CA3AF"
+              style={{ 
+                position: 'absolute',
+                right: '16px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                pointerEvents: 'none',
+              }} 
+            />
+          </div>
 
-        {/* Salary Range Slider */}
-        <Group position="right" style={{ maxWidth: '400px', marginLeft: 'auto' }}>
-          <div style={{ width: '100%' }}>
-            <Group position="apart" mb="xs">
+          {/* Job Type - positioned at left: 753px */}
+          <div style={{ 
+            position: 'relative',
+            flex: '0 0 200px',
+          }}>
+            <IconBriefcase 
+              size={16} 
+              color="#9CA3AF"
+              style={{ 
+                position: 'absolute',
+                left: '16px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 1,
+              }} 
+            />
+            <select
+              onChange={(e) => onFilterChange({ jobType: e.target.value })}
+              style={{
+                width: '100%',
+                height: '44px',
+                paddingLeft: '44px',
+                paddingRight: '40px',
+                fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
+                fontSize: '14px',
+                fontWeight: 400,
+                color: '#9CA3AF',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #E5E7EB',
+                borderRadius: '8px',
+                outline: 'none',
+                appearance: 'none',
+                cursor: 'pointer',
+                transition: 'border-color 0.2s ease',
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#7C3AED'}
+              onBlur={(e) => e.target.style.borderColor = '#E5E7EB'}
+            >
+              <option value="">Job type</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Internship">Internship</option>
+            </select>
+            <IconChevronDown 
+              size={16} 
+              color="#9CA3AF"
+              style={{ 
+                position: 'absolute',
+                right: '16px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                pointerEvents: 'none',
+              }} 
+            />
+          </div>
+
+          {/* Salary Range Slider - positioned at right side */}
+          <div style={{ 
+            flex: '0 0 280px',
+            marginLeft: 'auto',
+          }}>
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              marginBottom: '12px',
+            }}>
               <Text
-                size="sm"
-                weight={500}
                 style={{
                   fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
-                  fontSize: '14px',
+                  fontSize: '13px',
+                  fontWeight: 500,
                   color: '#374151',
                 }}
               >
                 Salary Per Month
               </Text>
               <Text
-                size="sm"
                 style={{
                   fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
-                  fontSize: '14px',
+                  fontSize: '13px',
+                  fontWeight: 500,
                   color: '#6B7280',
                 }}
               >
                 ₹{salaryRange[0]}k - ₹{salaryRange[1]}k
               </Text>
-            </Group>
-            <RangeSlider
-              value={salaryRange}
-              onChange={setSalaryRange}
-              onChangeEnd={handleSalaryChange}
-              min={0}
-              max={200}
-              step={10}
-              marks={[
-                { value: 0, label: '₹0k' },
-                { value: 50, label: '₹50k' },
-                { value: 100, label: '₹100k' },
-                { value: 150, label: '₹150k' },
-                { value: 200, label: '₹200k' },
-              ]}
-              style={{ width: '100%' }}
-              styles={{
-                track: {
-                  /* TODO: Verify track color from Figma */
-                },
-                bar: {
-                  backgroundColor: '#7C3AED',
-                },
-                thumb: {
-                  borderColor: '#7C3AED',
-                  backgroundColor: '#FFFFFF',
-                },
-              }}
-            />
+            </div>
+            <div style={{ position: 'relative', paddingTop: '8px' }}>
+              <RangeSlider
+                value={salaryRange}
+                onChange={setSalaryRange}
+                onChangeEnd={handleSalaryChange}
+                min={0}
+                max={200}
+                step={10}
+                styles={{
+                  root: {
+                    width: '100%',
+                  },
+                  track: {
+                    backgroundColor: '#E5E7EB',
+                    height: '4px',
+                    borderRadius: '2px',
+                  },
+                  bar: {
+                    backgroundColor: '#7C3AED',
+                    height: '4px',
+                  },
+                  thumb: {
+                    width: '16px',
+                    height: '16px',
+                    borderWidth: '3px',
+                    borderColor: '#7C3AED',
+                    backgroundColor: '#FFFFFF',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                  },
+                  markLabel: {
+                    display: 'none',
+                  },
+                }}
+              />
+            </div>
           </div>
-        </Group>
+        </div>
       </Container>
     </div>
   );

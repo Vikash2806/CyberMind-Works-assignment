@@ -12,13 +12,6 @@ export default function HomePage() {
   const [modalOpened, setModalOpened] = useState(false);
   const { jobs, loading, error, createJob, updateFilters } = useJobs();
 
-  /* TODO: Verify from Figma:
-     - Page background color
-     - Container max width
-     - Grid gap between cards
-     - Number of columns at different breakpoints
-  */
-
   const handleCreateJob = async (jobData) => {
     await createJob(jobData);
     setModalOpened(false);
@@ -30,22 +23,32 @@ export default function HomePage() {
 
   return (
     <div style={{
-      /* TODO: Verify from Figma */
-      backgroundColor: '#F5F5F5',  /* TODO: Verify page background from Figma */
+      backgroundColor: '#F9FAFB',
       minHeight: '100vh',
     }}>
-      {/* Navbar */}
-      <Navbar onCreateJobClick={() => setModalOpened(true)} />
+      {/* Header Section - Navbar + Filters Combined */}
+      <div
+        style={{
+          backgroundColor: '#FFFFFF',
+          borderBottom: '1px solid #E5E7EB',
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+        }}
+      >
+        {/* Navbar */}
+        <Navbar onCreateJobClick={() => setModalOpened(true)} />
 
-      {/* Filters */}
-      <Filters onFilterChange={handleFilterChange} />
+        {/* Filters */}
+        <Filters onFilterChange={handleFilterChange} />
+      </div>
 
       {/* Job List */}
-      <Container size="xl" py="xl">
+      <Container size="xl" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
         {loading ? (
           <Center style={{ minHeight: '400px' }}>
             <Stack align="center" spacing="md">
-              <Loader size="lg" color="brand" />
+              <Loader size="lg" color="#7C3AED" />
               <Text 
                 color="dimmed"
                 style={{
@@ -102,15 +105,9 @@ export default function HomePage() {
             </Stack>
           </Center>
         ) : (
-          /* Job Grid */
-          /* TODO: Verify from Figma:
-              - Grid columns (appears to be 4 columns)
-              - Gap between cards (appears to be ~24px)
-              - Breakpoints for responsive design
-          */
           <SimpleGrid
-            cols={4}                 /* TODO: Verify from Figma - appears to be 4 columns */
-            spacing="xl"             /* TODO: Verify gap from Figma (~24px) */
+            cols={4}
+            spacing={24}
             breakpoints={[
               { maxWidth: 'xl', cols: 4 },
               { maxWidth: 'lg', cols: 3 },

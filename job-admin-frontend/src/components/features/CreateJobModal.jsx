@@ -19,21 +19,10 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
     setValue,
   } = useForm();
 
-  /* TODO: Verify all modal and form styles from Figma:
-     - Modal width
-     - Modal padding
-     - Modal border radius
-     - Form field spacing
-     - Button styles
-     - Input field styles
-     - Font family (Satoshi Variable)
-  */
-
   const onSubmit = async (data) => {
     try {
       setLoading(true);
 
-      // Format data for API
       const formattedData = {
         ...data,
         salaryMin: parseFloat(data.salaryMin) || 0,
@@ -44,15 +33,13 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
       };
 
       await onJobCreated(formattedData);
-      
-      // Show success notification
+
       showNotification({
         title: 'Success!',
         message: 'Job created successfully',
         color: 'green',
       });
 
-      // Reset form and close modal
       reset();
       setSelectedDate(null);
       onClose();
@@ -79,22 +66,16 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
       opened={opened}
       onClose={handleClose}
       title={
-        /* TODO: Verify from Figma:
-           - Title font family (Satoshi Variable)
-           - Title font size
-           - Title font weight
-           - Title color
-        */
         <span style={{
-          fontFamily: 'Satoshi Variable, -apple-system, sans-serif', /* TODO: Verify from Figma */
-          fontSize: '24px',        /* TODO: Verify from Figma */
-          fontWeight: 600,         /* TODO: Verify from Figma */
-          color: '#111827',        /* TODO: Verify from Figma */
+          fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
+          fontSize: '24px',
+          fontWeight: 600,
+          color: '#111827',
         }}>
           Create Job Opening
         </span>
       }
-      size="lg"                    /* TODO: Verify modal width from Figma (appears ~800px) */
+      size="lg"
       centered
       overlayProps={{
         opacity: 0.55,
@@ -102,56 +83,54 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
       }}
       styles={{
         modal: {
-          /* TODO: Verify from Figma */
-          borderRadius: '16px',    /* TODO: Verify border radius from Figma */
-          padding: '32px',         /* TODO: Verify padding from Figma */
+          borderRadius: '16px',
+          padding: '32px',
         },
         header: {
-          paddingBottom: '24px',   /* TODO: Verify from Figma */
+          paddingBottom: '24px',
           borderBottom: '1px solid #E5E7EB',
           marginBottom: '24px',
+          display: 'flex',
+          justifyContent: 'center', // centers the title horizontally
+          alignItems: 'center',
+          position: 'relative',
         },
         title: {
           fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
-        }
+          textAlign: 'center', // ensures text alignment is centered
+          width: '100%',
+        },
+        close: {
+          position: 'absolute',
+          right: 16, // keeps the close button on the right
+    },
       }}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Row 1: Job Title and Company Name */}
         <Group grow mb="md" align="flex-start">
-          {/* Job Title */}
-          {/* TODO: Verify from Figma:
-              - Input height
-              - Border radius
-              - Border color
-              - Font family (Satoshi Variable)
-              - Font size
-              - Label font size
-              - Label font weight
-              - Label color
-          */}
           <div>
             <label style={{
-              fontFamily: 'Satoshi Variable, -apple-system, sans-serif', /* TODO: Verify from Figma */
-              fontSize: '14px',      /* TODO: Verify from Figma */
-              fontWeight: 500,       /* TODO: Verify from Figma */
-              color: '#374151',      /* TODO: Verify from Figma */
+              fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
+              fontSize: '14px',
+              fontWeight: 500,
+              color: '#374151',
               display: 'block',
-              marginBottom: '8px',   /* TODO: Verify from Figma */
+              marginBottom: '8px',
             }}>
               Job Title
             </label>
             <TextInput
-              placeholder="Full Stack Develo"
+              placeholder="Full Stack Developer"
               {...register('jobTitle', { required: 'Job title is required' })}
               error={errors.jobTitle?.message}
               styles={{
                 input: {
-                  fontFamily: 'Satoshi Variable, -apple-system, sans-serif', /* TODO: Verify from Figma */
-                  fontSize: '14px',    /* TODO: Verify from Figma */
-                  height: '44px',      /* TODO: Verify from Figma */
-                  borderRadius: '8px', /* TODO: Verify from Figma */
-                  borderColor: '#E5E7EB',  /* TODO: Verify from Figma */
+                  fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
+                  fontSize: '14px',
+                  height: '44px',
+                  borderRadius: '8px',
+                  borderColor: '#E5E7EB',
                   '&:focus': {
                     borderColor: '#7C3AED',
                   }
@@ -160,7 +139,6 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
             />
           </div>
 
-          {/* Company Name */}
           <div>
             <label style={{
               fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
@@ -183,7 +161,7 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
                   height: '44px',
                   borderRadius: '8px',
                   borderColor: '#E5E7EB',
-                  color: '#9CA3AF',    /* TODO: Verify placeholder color from Figma */
+                  color: '#9CA3AF',
                   '&:focus': {
                     borderColor: '#7C3AED',
                   }
@@ -195,12 +173,6 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
 
         {/* Row 2: Location and Job Type */}
         <Group grow mb="md" align="flex-start">
-          {/* Location */}
-          {/* TODO: Verify from Figma:
-              - Dropdown styles
-              - Placeholder text
-              - Chevron icon
-          */}
           <div>
             <label style={{
               fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
@@ -243,12 +215,6 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
             />
           </div>
 
-          {/* Job Type */}
-          {/* TODO: Verify from Figma:
-              - Dropdown height
-              - Options list styling
-              - Selected state styling
-          */}
           <div>
             <label style={{
               fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
@@ -290,7 +256,6 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
 
         {/* Row 3: Salary Range and Application Deadline */}
         <Group grow mb="md" align="flex-start">
-          {/* Salary Range */}
           <div>
             <label style={{
               fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
@@ -303,20 +268,14 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
               Salary Range
             </label>
             <Group spacing="xs" grow>
-              {/* Min Salary */}
-              {/* TODO: Verify from Figma:
-                  - Rupee icon style
-                  - Input width
-                  - Placeholder format
-              */}
               <NumberInput
-                placeholder="₹ 0"
+                placeholder="₹0"
                 min={0}
                 hideControls
                 {...register('salaryMin', { required: 'Min salary is required' })}
                 onChange={(value) => setValue('salaryMin', value)}
                 error={errors.salaryMin?.message}
-                icon={<span style={{ color: '#9CA3AF' }}>₹</span>}
+                icon={<span style={{ color: '#9CA3AF' }}>↓↑</span>}
                 styles={{
                   input: {
                     fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
@@ -331,15 +290,14 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
                 }}
               />
 
-              {/* Max Salary */}
               <NumberInput
-                placeholder="₹ 12,00,000"
+                placeholder="₹12,00,000"
                 min={0}
                 hideControls
                 {...register('salaryMax', { required: 'Max salary is required' })}
                 onChange={(value) => setValue('salaryMax', value)}
                 error={errors.salaryMax?.message}
-                icon={<span style={{ color: '#9CA3AF' }}>₹</span>}
+                icon={<span style={{ color: '#9CA3AF' }}>↓↑</span>}
                 styles={{
                   input: {
                     fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
@@ -356,12 +314,6 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
             </Group>
           </div>
 
-          {/* Application Deadline */}
-          {/* TODO: Verify from Figma:
-              - Calendar icon size
-              - Date picker styling
-              - Date format
-          */}
           <div>
             <label style={{
               fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
@@ -396,13 +348,6 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
         </Group>
 
         {/* Job Description */}
-        {/* TODO: Verify from Figma:
-            - Textarea height
-            - Textarea min rows
-            - Border radius
-            - Placeholder text
-            - Resize handle visibility
-        */}
         <div style={{ marginBottom: '24px' }}>
           <label style={{
             fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
@@ -416,16 +361,16 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
           </label>
           <Textarea
             placeholder="Please share a description to let the candidate know more about the job role"
-            minRows={6}              /* TODO: Verify from Figma */
+            minRows={6}
             {...register('jobDescription', { required: 'Job description is required' })}
             error={errors.jobDescription?.message}
             styles={{
               input: {
                 fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
-                fontSize: '14px',    /* TODO: Verify from Figma */
-                borderRadius: '8px', /* TODO: Verify from Figma */
+                fontSize: '14px',
+                borderRadius: '8px',
                 borderColor: '#E5E7EB',
-                resize: 'none',      /* TODO: Check if resize is allowed in Figma */
+                resize: 'none',
                 '&:focus': {
                   borderColor: '#7C3AED',
                 }
@@ -435,59 +380,46 @@ export default function CreateJobModal({ opened, onClose, onJobCreated }) {
         </div>
 
         {/* Action Buttons */}
-        {/* TODO: Verify from Figma:
-            - Button spacing
-            - Button heights
-            - Button border radius
-            - Font family (Satoshi Variable)
-            - Font size
-            - Font weight
-            - Save Draft button style (outline)
-            - Publish button style (filled)
-            - Button colors
-        */}
         <Group position="apart" mt="xl">
-          {/* Save Draft Button */}
           <Button
             variant="outline"
             size="md"
             rightIcon={<IconChevronDown size={16} />}
             style={{
-              fontFamily: 'Satoshi Variable, -apple-system, sans-serif', /* TODO: Verify from Figma */
-              fontSize: '15px',      /* TODO: Verify from Figma */
-              fontWeight: 600,       /* TODO: Verify from Figma */
-              borderColor: '#E5E7EB',  /* TODO: Verify from Figma */
-              color: '#374151',      /* TODO: Verify from Figma */
-              borderRadius: '8px',   /* TODO: Verify from Figma */
-              height: '46px',        /* TODO: Verify from Figma */
-              padding: '0 24px',     /* TODO: Verify from Figma */
+              fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
+              fontSize: '15px',
+              fontWeight: 600,
+              borderColor: '#E5E7EB',
+              color: '#374151',
+              borderRadius: '8px',
+              height: '46px',
+              padding: '0 24px',
             }}
             onClick={handleClose}
           >
             Save Draft
           </Button>
 
-          {/* Publish Button */}
           <Button
             type="submit"
             size="md"
             loading={loading}
             rightIcon={<span style={{ marginLeft: '4px' }}>»</span>}
             style={{
-              fontFamily: 'Satoshi Variable, -apple-system, sans-serif', /* TODO: Verify from Figma */
-              fontSize: '15px',      /* TODO: Verify from Figma */
-              fontWeight: 600,       /* TODO: Verify from Figma */
-              backgroundColor: '#00A8E8',  /* TODO: Verify exact cyan hex from Figma */
-              borderRadius: '8px',   /* TODO: Verify from Figma */
-              height: '46px',        /* TODO: Verify from Figma */
-              padding: '0 32px',     /* TODO: Verify from Figma */
+              fontFamily: 'Satoshi Variable, -apple-system, sans-serif',
+              fontSize: '15px',
+              fontWeight: 600,
+              backgroundColor: '#00A8E8',
+              borderRadius: '8px',
+              height: '46px',
+              padding: '0 32px',
             }}
             styles={{
               root: {
                 '&:hover': {
-                  backgroundColor: '#0090C8',  /* TODO: Verify hover color from Figma */
+                  backgroundColor: '#0090C8',
                 }
-              }
+              } 
             }}
           >
             Publish
