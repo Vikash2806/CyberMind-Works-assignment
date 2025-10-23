@@ -1,0 +1,47 @@
+/* 
+  TODO: Update these values after inspecting Figma for exact fonts and colors
+  Check Figma for:
+  - Exact font family name
+  - Primary color hex values
+  - Button border radius
+  - Card shadows
+  - Spacing values
+*/
+
+:root {
+  /* FONTS - TODO: Verify from Figma */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-size-base: 16px;
+
+  /* COLORS - TODO: Verify exact hex values from Figma */
+  --color-primary: #7C3AED;        /* Purple button color (from screenshot) */
+  --color-primary-hover: #6D28D9;  /* Darker purple for hover */
+  --color-secondary: #00A8E8;      /* Blue button color (from screenshot) */
+  --color-text-primary: #000000;
+  --color-text-secondary: #6B7280;
+  --color-border: #E5E7EB;
+  --color-background: #F5F5F5;
+  --color-card-bg: #FFFFFF;
+
+  /* SPACING - TODO: Verify from Figma */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* CARD - TODO: Verify dimensions from Figma */
+  --card-width: 316px;
+  --card-min-height: 360px;
+  --card-radius: 12px;
+  --card-padding: 20px;
+  --card-gap: 24px;
+
+  /* BUTTONS - TODO: Verify from Figma */
+  --btn-radius: 8px;
+  --btn-height: 46px;
+  
+  /* SHADOWS - TODO: Verify from Figma */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
