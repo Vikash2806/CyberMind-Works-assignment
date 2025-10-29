@@ -140,7 +140,7 @@ export default function JobCard({ job }) {
               color: "#6B7280",
             }}
           >
-            12LPA
+            45LPA
           </Text>
         </Group>
       </Group>
